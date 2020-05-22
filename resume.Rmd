@@ -10,7 +10,7 @@ twitter: mr_netherlands
 github: christianholland
 aboutme: "Data scientist tackling biomedical challenges"
 date: "`r format(Sys.time(), '%B %Y')`"
-headcolor: "000000"
+# headXcolor: "000000"
 orcid: 0000-0002-3060-5786
 # profilepic: "./img/profile.jpeg"
 output: vitae::awesomecv
@@ -60,51 +60,19 @@ readr::read_csv2("entries/conferences.csv") %>%
 
 # Selected Publications
 
-<!-- * **Holland CH**, Tanevski J, Perales-Patón J, Gleixner J, Kumar MP, Mereu E,  -->
-<!-- Joughin BA, Stegle O, Lauffenburger DA, Heyn H, Szalai B, Saez-Rodriguez, J.  -->
-<!-- "Robustness and applicability of transcription factor and pathway analysis tools  -->
-<!-- on single-cell RNA-seq data." _Genome Biology._ 2020. DOI:  -->
-<!-- [10.1186/s13059-020-1949-z](https://doi.org/10.1186/s13059-020-1949-z). -->
-
-<!-- * Tajti F, Kuppe C, Antoranz A, Ibrahim MM, Kim H, Ceccarelli F, **Holland CH**,  -->
-<!-- Olauson H, Floege J, Alexopoulos LG, Kramann R, Saez-Rodriguez J. "A functional  -->
-<!-- landscape of chronic kidney disease entities from public transcriptomic data."  -->
-<!-- _Kidney International Reports._ 2020. DOI:  -->
-<!-- [10.1016/j.ekir.2019.11.005](https://doi.org/10.1016/j.ekir.2019.11.005). -->
-
-<!-- * Garcia-Alonso L, **Holland CH**, Ibrahim MM, Turei D, Saez-Rodriguez J.  -->
-<!-- "Benchmark and integration of resources for the estimation of human  -->
-<!-- transcription factor activities." _Genome Research._ 2019. DOI: -->
-<!-- [10.1101/gr.240663.118](https://doi.org/10.1101/gr.240663.118). -->
-
-<!-- * **Holland CH**, Szalai B, Saez-Rodriguez J. "Transfer of regulatory knowledge -->
-<!-- from human to mouse for functional genomics analysis." _Biochimica et Biophysica -->
-<!-- Acta (BBA) - Gene Regulatory Mechanisms._ 2019. DOI: -->
-<!-- [10.1016/j.bbagrm.2019.194431](https://doi.org/10.1016/j.bbagrm.2019.194431). -->
-
-<!-- * Ghallab A, Myllys M, **Holland CH**, Zaza A, Murad W, Hassan R, Ahmed YA,  -->
-<!-- Abbas T, Abdelrahim EA, Schneider KM, Matz-Soja M, Reinders J, Gebhardt R,  -->
-<!-- Berres ML, Hatting M, Drasdo D, Saez-Rodriguez J, Trautwein C, Hengstler JG.  -->
-<!-- "Influence of Liver Fibrosis on Lobular Zonation." _Cells._ 2019. DOI:  -->
-<!-- [10.3390/cells8121556](https://doi.org/10.3390/cells8121556). -->
-
-<!-- * Szalai B, Subramanian V, **Holland CH**, Alföldi R, Puskás LG, Saez-Rodriguez  -->
-<!-- J. "Signatures of cell death and proliferation in perturbation transcriptomics  -->
-<!-- data - from confounding factor to effective prediction."  -->
-<!-- _Nucleic Acids Research._ 2019. DOI:  -->
-<!-- [10.1093/nar/gkz805](https://doi.org/10.1093/nar/gkz805). -->
-
 ```{r}
-library(dplyr)
-scholar::get_publications("h_y2uTwAAAAJ&hl") %>% 
-  filter(cites > 1) %>% 
-  distinct(title, .keep_all = TRUE) %>%
-  arrange(-year) %>%
-  transmute(bibtype = "Article", author = as.character(author),
-            title = as.character(title),
-            journaltitle = as.character(journal), year, key = row_number()) %>% 
-  RefManageR::as.BibEntry() %>% 
-  RefManageR::WriteBib("references.bib")
+# library(dplyr)
+# x = scholar::get_publications("h_y2uTwAAAAJ") %>%
+#   filter(cites > 1) %>%
+#   filter(!stringr::str_detect(author, "Tajti")) %>%
+#   distinct(title, .keep_all = TRUE) %>%
+#   arrange(-year) %>%
+#   slice(1) %>%
+#   transmute(bibtype = "Article", author = as.character(author),
+#             title = as.character(title),
+#             journaltitle = as.character(journal), year, key = row_number()) %>%
+#   RefManageR::as.BibEntry() %>%
+#   RefManageR::WriteBib("references2.bib")
 
 bibliography_entries("references.bib")
 ```
