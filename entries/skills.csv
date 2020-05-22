@@ -1,0 +1,15 @@
+category;skill
+Programming;R
+Programming;Python
+Programming;Matlab
+Programming;Bash
+Packages;tidyverse
+Packages;shiny
+Packages;bookdown
+Packages;pkgdown
+Packages;testthat
+Packages;pandas
+Packages;numpy
+Tools;Git
+Tools;Travis CI
+Tools;LaTeX
