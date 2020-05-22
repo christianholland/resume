@@ -41,3 +41,6 @@ vignettes/*.pdf
 # ignore knitted README
 README.html
 
+# ignore log file
+resume.log
+
