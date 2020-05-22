@@ -1,0 +1,10 @@
+language: r
+sudo: false
+script: make bacon
+cache: packages
+r_packages:
+  - rmarkdown
+  - knitr
+  - vitae
+  - readr
+  - dplyr
