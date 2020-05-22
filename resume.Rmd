@@ -1,0 +1,64 @@
+---
+name: Christian H.
+surname: Holland
+position: "PhD student"
+address: "BioQuant, University of Heidelberg"
+phone: +49 (0) 176 4344 9810
+# www: "https://christianholland.herokuapp.com"
+email: "cholland2408@gmail.com"
+twitter: mr_netherlands
+github: christianholland
+date: "`r format(Sys.time(), '%B %Y')`"
+output: vitae::awesomecv
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, cache = F)
+library(vitae)
+```
+
+# Education
+
+```{r}
+readr::read_csv2("entries/education.csv") %>%
+  detailed_entries(degree, year, institution, where, description)
+
+```
+
+# Working Experience
+```{r}
+readr::read_csv2("entries/experience.csv") %>%
+  detailed_entries(degree, year, institution, where, description)
+```
+
+# Teaching Experience
+```{r}
+readr::read_csv2("entries/teaching.csv") %>%
+  detailed_entries(degree, year, institution, where)
+```
+
+# Computational Skills
+
+* R - **Expert**
+* Python - **Advanced**
+* Git - **Advanced**
+* LaTeX - **Advanced**
+* Matlab - **Beginner**
+
+# Selected Publications
+
+```{r}
+library(dplyr)
+scholar::get_publications("h_y2uTwAAAAJ&hl") %>% 
+  filter(cites > 1) %>% 
+  distinct(title, .keep_all = TRUE) %>%
+  arrange(-year) %>%
+  transmute(bibtype = "Article", author = as.character(author),
+            title = as.character(title),
+            journaltitle = as.character(journal), year, key = row_number()) %>% 
+  RefManageR::as.BibEntry() %>% 
+  RefManageR::WriteBib("references.bib")
+
+bibliography_entries("references.bib")
+```
+
