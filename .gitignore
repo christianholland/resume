@@ -44,3 +44,6 @@ README.html
 # ignore log file
 resume.log
 
+# ignore image
+img/
+
