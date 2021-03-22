@@ -22,26 +22,26 @@ library(vitae)
 ```
 
 # Education
-```{r}
+```{r education}
 readr::read_csv2("entries/education.csv") %>%
   detailed_entries(degree, year, institution, where, description)
 
 ```
 
 # Working Experience
-```{r}
+```{r working}
 readr::read_csv2("entries/experience.csv") %>%
   detailed_entries(degree, year, institution, where, description)
 ```
 
 # Teaching Experience
-```{r}
+```{r teaching}
 readr::read_csv2("entries/teaching.csv") %>%
   detailed_entries(degree, year, institution, where)
 ```
 
 # Skills
-```{r}
+```{r skills}
 readr::read_csv2("entries/skills.csv") %>%
   group_by(category) %>%
   summarise(skill = stringr::str_c(skill, collapse=", ")) %>%
@@ -51,16 +51,26 @@ readr::read_csv2("entries/skills.csv") %>%
   detailed_entries(what = skill, with = category)
 ```
 
+# Developed software
+```{r software}
+packages_used <- tibble::tribble(
+  ~ package, ~ date, ~ language, ~ timezone, ~ details,
+  "Bioconductor package", Sys.Date(), "dorothea", "Available since Bioc 3.11", c("Tool to infer transcripion factor activities from gene expression data (Lead developer)"),
+  "Bioconductor package", Sys.Date(), "progeny", "Available since Bioc 3.6", "Tool to infer pathway activities from gene expression data (contributor)."
+)
+packages_used %>%
+  detailed_entries(what = package, when = date, with = language, where = timezone, why = details)
+```
+
 
 # Conferences Attended
-```{r}
+```{r conferences}
 readr::read_csv2("entries/conferences.csv") %>%
   detailed_entries(description, year, which, where)
 ```
 
 # Selected Publications
-
-```{r}
+```{r publications}
 # library(dplyr)
 # library(scholar)
 # id = "h_y2uTwAAAAJ"
@@ -98,6 +108,7 @@ readr::read_csv2("entries/conferences.csv") %>%
 #   RefManageR::as.BibEntry() %>%
 #   RefManageR::WriteBib("references2.bib")
 
-bibliography_entries("references.bib")
+bibliography_entries("references.bib") %>%
+  arrange()
 ```
 

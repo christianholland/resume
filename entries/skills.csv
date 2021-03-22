@@ -1,10 +1,11 @@
 category;skill
-Programming;R
-Programming;Python
-Programming;Matlab
-Programming;Bash
+Programming;R (expert)
+Programming;Python (proficient)
+Programming;Matlab (novice)
+Programming;Bash (proficient)
 Packages;tidyverse
 Packages;shiny
+Packages;rmarkdown
 Packages;bookdown
 Packages;pkgdown
 Packages;testthat
