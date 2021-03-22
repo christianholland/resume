@@ -25,7 +25,6 @@ library(vitae)
 ```{r education}
 readr::read_csv2("entries/education.csv") %>%
   detailed_entries(degree, year, institution, where, description)
-
 ```
 
 # Working Experience
@@ -44,22 +43,25 @@ readr::read_csv2("entries/teaching.csv") %>%
 ```{r skills}
 readr::read_csv2("entries/skills.csv") %>%
   group_by(category) %>%
-  summarise(skill = stringr::str_c(skill, collapse=", ")) %>%
-  mutate(category = factor(category, levels = c("Programming", "Packages", 
-                                                "Tools"))) %>%
+  summarise(skill = stringr::str_c(skill, collapse = ", ")) %>%
+  mutate(category = factor(category, levels = c(
+    "Programming", "Packages",
+    "Tools"
+  ))) %>%
   arrange(category) %>%
   detailed_entries(what = skill, with = category)
 ```
 
-# Developed software
+# Software development
 ```{r software}
-packages_used <- tibble::tribble(
-  ~ package, ~ date, ~ language, ~ timezone, ~ details,
-  "Bioconductor package", Sys.Date(), "dorothea", "Available since Bioc 3.11", c("Tool to infer transcripion factor activities from gene expression data (Lead developer)"),
-  "Bioconductor package", Sys.Date(), "progeny", "Available since Bioc 3.6", "Tool to infer pathway activities from gene expression data (contributor)."
+sofware <- tibble::tribble(
+  ~package, ~language, ~timezone, ~details,
+  "Bioconductor package", "dorothea", "Available since Bioc 3.11", c("Tool to infer transcripion factor activities from gene expression data (Lead developer)"),
+  "Bioconductor package", "progeny", "Available since Bioc 3.6", "Tool to infer pathway activities from gene expression data (Contributor)"
 )
-packages_used %>%
-  detailed_entries(what = package, when = date, with = language, where = timezone, why = details)
+sofware %>%
+  detailed_entries(what = package, with = language, where = timezone, 
+                   why = details)
 ```
 
 
@@ -89,12 +91,12 @@ readr::read_csv2("entries/conferences.csv") %>%
 #   transmute(bibtype = "Article", author = as.character(author),
 #             title = as.character(title),
 #             journaltitle = as.character(journal), year, key = row_number()) #%>%
-#   
+#
 # l %>%
 #   RefManageR::as.BibEntry() %>%
 #   RefManageR::WriteBib("references2.bib")
 
-# 
+#
 # x = scholar::get_complete_authors(key, "UeHWp8X0CEIC")
 # x = scholar::get_publications("h_y2uTwAAAAJ") %>%
 #   filter(cites > 1) %>%
@@ -112,3 +114,46 @@ bibliography_entries("references.bib") %>%
   arrange()
 ```
 
+```{r map, eval=FALSE, include=FALSE}
+load.fontawesome()
+uni <- fontawesome("fa-university")
+work <- fontawesome("fa-briefcase")
+
+world <- getMap(resolution = "high")
+world <- world %>% st_as_sf()
+cities <- st_sfc(
+  st_point(c(-79.00453, -2.90055)),
+  st_point(c(-9.13333, 38.71667)),
+  st_point(c(7.6261, 51.9607)),
+  st_point(c(12.9864, 47.8029))
+) %>%
+  st_sf(name = c("Cuenca, EC", "Lisbon, PT", "Münster, DE", "Salzburg, AT")) %>%
+  st_set_crs(4326) %>%
+  mutate(label = c(paste(work, uni, sep = " "), rep(uni, 2), work))
+routes <- cities %>%
+  points2line() %>%
+  slice(c(2, 7, 12)) %>%
+  st_segmentize(units::set_units(100, m))
+ggplot(data = world) +
+  geom_sf(color = "white", lwd = 0.1) +
+  xlab("") +
+  ylab("") +
+  geom_sf_text(
+    data = cities,
+    aes(label = label),
+    size = 3,
+    color = "#009ACD",
+    family = "fontawesome-webfont"
+  ) +
+  geom_sf(
+    data = routes, color = "#009ACD", size = 0.5, alpha = 0.5, linetype = "dotted"
+  ) +
+  coord_sf(crs = "+proj=robin", xlim = c(-10000000, 4500000), ylim = c(-390000, 6100000)) +
+  theme_minimal() +
+  theme(
+    panel.grid = element_line(color = "transparent"),
+    plot.margin = margin(-1, 0, -1, 0, "cm"),
+    axis.text = element_blank(),
+    axis.title = element_blank()
+  )
+```

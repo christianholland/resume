@@ -1,8 +1,8 @@
 category;skill
 Programming;R (expert)
 Programming;Python (proficient)
-Programming;Matlab (novice)
 Programming;Bash (proficient)
+Programming;Matlab (novice)
 Packages;tidyverse
 Packages;shiny
 Packages;rmarkdown
@@ -12,5 +12,5 @@ Packages;testthat
 Packages;pandas
 Packages;numpy
 Tools;Git
-Tools;Travis CI
+Tools;CI (Travis or GHA)
 Tools;LaTeX
